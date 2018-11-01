@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--
+* CoreUI - Free Bootstrap Admin Template
+* @version v2.0.0
+* @link https://coreui.io
+* Copyright (c) 2018 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)
+-->
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">>
+<head th:replace="head"></head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+<header th:replace="header"></header>
+<div class="app-body">
+    <div th:replace="menu"></div>
+    <main class="main">
+        <!-- Breadcrumb-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Veículos</li>
+        </ol>
+        <div class="container-fluid">
+            <div class="animated fadeIn">
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fa fa-align-justify"></i> Lista de Veículos
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="form-group col-lg-2">
+                                        <a href="/veiculos/cadastro" class="btn btn-block btn-primary">
+                                            <i class="fa fa-car"></i>
+                                            &nbsp;
+                                            Cadastrar Novo Veículo
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+
+                                        <table class="table table-responsive-sm">
+                                            <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="text-center">Id</th>
+                                                <th>Descrição</th>
+                                                <th class="text-center">Fator Multiplicador de Custo</th>
+                                                <th class="text-center">Cadastro</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            <tr th:each="veiculo : ${veiculos}">
+                                                <td class="text-center">
+                                                    <a th:href="${'/veiculos/editar/' + veiculo.id}" class="btn btn-sm btn-success">
+                                                        Editar
+                                                        </a>
+                                                    <a class="btn btn-sm btn-danger" th:attr="onclick = ${'exibirModalDelete(' + veiculo.id + ', ''' + veiculo.descricao + ''')'}" href="#">Apagar</a>
+                                                </td>
+                                                <td th:text="${veiculo.id}" class="text-center"></td>
+                                                <td th:text="${veiculo.descricao}"></td>
+                                                <td th:text="${veiculo.fatorMultiplicador}" class="text-center"></td>
+                                                <td th:text="${#temporals.format(veiculo.dataCadastro, 'dd/MM/yyyy')}" class="text-center"></td>
+                                            </tr>
+
+                                            <tr th:if="${#lists.isEmpty(veiculos)}">
+                                                <td colspan="5" class="text-center">Nenhum veículo cadastrado.</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div th:replace="modal-delete"></div>
+        </div>
+    </main>
+    <aside th:replace="aside-menu"></aside>
+</div>
+<footer th:replace="footer"></footer>
+<!-- Bootstrap and necessary plugins-->
+<script th:src="@{/vendors/jquery/js/jquery.min.js}"></script>
+<script th:src="@{/vendors/popper.js/js/popper.min.js}"></script>
+<script th:src="@{/vendors/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/vendors/pace-progress/js/pace.min.js}"></script>
+<script th:src="@{/vendors/perfect-scrollbar/js/perfect-scrollbar.min.js}"></script>
+<script th:src="@{/vendors/coreui/js/coreui.min.js}"></script>
+<script th:src="@{/js/veiculo.js}"></script>
+</body>
+</html>
